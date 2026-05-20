@@ -16,8 +16,17 @@ async function bootstrap() {
       forbidNonWhitelisted: true,
     }),
   );
+  const webOrigin = config.get<string>('WEB_ORIGIN', 'http://localhost:3000');
   app.enableCors({
-    origin: config.get<string>('WEB_ORIGIN', 'http://localhost:3000'),
+    origin: (origin, cb) => {
+      if (!origin) return cb(null, true); // same-origin / curl
+      const allowed = webOrigin.split(',').map((o) => o.trim());
+      // Always allow any localhost port in dev
+      if (/^http:\/\/localhost(:\d+)?$/.test(origin) || allowed.includes(origin)) {
+        return cb(null, true);
+      }
+      cb(new Error(`CORS: origin ${origin} not allowed`));
+    },
     credentials: true,
   });
 
