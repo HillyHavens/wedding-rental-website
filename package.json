@@ -1,0 +1,22 @@
+{
+  "name": "bridal-belle-boutique",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Wedding rental marketplace for the Rwandan market",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "yarn workspaces foreach -pi --all --include 'apps/*' run dev",
+    "build": "yarn workspaces foreach -pt --all --include 'apps/*' run build",
+    "lint": "yarn workspaces foreach -p --all run lint",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f postgres"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "yarn@4.15.0"
+}

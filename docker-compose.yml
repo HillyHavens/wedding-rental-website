@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: bbb_postgres
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: bbb
+      POSTGRES_PASSWORD: bbb_dev_password
+      POSTGRES_DB: bbb_dev
+    volumes:
+      - bbb_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U bbb -d bbb_dev"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  bbb_pgdata:

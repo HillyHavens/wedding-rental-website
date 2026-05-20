@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum UserRole {
+  CUSTOMER
+  ADMIN
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+}
+
+enum EventType {
+  GUSABA
+  GUKWA
+  CIVIL
+  RELIGIOUS
+  RECEPTION
+  OTHER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  name         String
+  phone        String?
+  role         UserRole @default(CUSTOMER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  bookings Booking[]
+
+  @@map("users")
+}
+
+model Category {
+  id          String  @id @default(cuid())
+  slug        String  @unique
+  name        String
+  description String?
+  iconName    String?
+  sortOrder   Int     @default(0)
+  isActive    Boolean @default(true)
+
+  items RentalItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model RentalItem {
+  id            String   @id @default(cuid())
+  categoryId    String
+  name          String
+  description   String?
+  pricePerEvent Int      // store in RWF, integer (smallest unit avoidance — no cents needed)
+  quantity      Int      @default(1)
+  images        String[] @default([])
+  isActive      Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+
+  category     Category      @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  bookingItems BookingItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([isFeatured, isActive])
+  @@map("rental_items")
+}
+
+model Booking {
+  id         String        @id @default(cuid())
+  userId     String
+  eventDate  DateTime      @db.Date
+  eventType  EventType     @default(RECEPTION)
+  status     BookingStatus @default(PENDING)
+  notes      String?
+  totalPrice Int           // RWF
+
+  user  User          @relation(fields: [userId], references: [id], onDelete: Restrict)
+  items BookingItem[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([eventDate])
+  @@map("bookings")
+}
+
+model BookingItem {
+  id             String @id @default(cuid())
+  bookingId      String
+  rentalItemId   String
+  priceAtBooking Int    // RWF, snapshot
+
+  booking    Booking    @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  rentalItem RentalItem @relation(fields: [rentalItemId], references: [id], onDelete: Restrict)
+
+  @@index([bookingId])
+  @@index([rentalItemId])
+  @@map("booking_items")
+}

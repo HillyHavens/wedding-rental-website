@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 38 50% 98%;
+    --foreground: 158 40% 8%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 158 40% 8%;
+
+    --primary: 162 49% 24%;
+    --primary-foreground: 38 50% 98%;
+
+    --secondary: 44 75% 50%;
+    --secondary-foreground: 158 40% 8%;
+
+    --muted: 38 30% 92%;
+    --muted-foreground: 158 15% 35%;
+
+    --accent: 18 55% 45%;
+    --accent-foreground: 38 50% 98%;
+
+    --border: 38 30% 86%;
+    --input: 38 30% 86%;
+    --ring: 162 49% 24%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    border-color: hsl(var(--border));
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  ::selection {
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gold-text {
+    background: linear-gradient(135deg, #c19f23 0%, #dabb3d 40%, #f5e9b9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .gold-shimmer {
+    background: linear-gradient(
+      90deg,
+      #a07f17 0%,
+      #f5e9b9 25%,
+      #dabb3d 50%,
+      #f5e9b9 75%,
+      #a07f17 100%
+    );
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer 8s linear infinite;
+  }
+}
