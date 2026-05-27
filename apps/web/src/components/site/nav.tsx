@@ -12,6 +12,7 @@ import { ShoppingBag } from 'lucide-react';
 
 const links = [
   { href: '/items', label: 'Browse' },
+  { href: '/gallery', label: 'Gallery' },
   { href: '/#ceremonies', label: 'Ceremonies' },
   { href: '/#categories', label: 'Categories' },
   { href: '/#story', label: 'Our Story' },

@@ -92,6 +92,7 @@ __metadata:
     "@prisma/client": "npm:^5.22.0"
     "@types/bcryptjs": "npm:^2.4.6"
     "@types/express": "npm:^5.0.0"
+    "@types/multer": "npm:^2.1.0"
     "@types/node": "npm:^22.9.0"
     bcryptjs: "npm:^2.4.3"
     class-transformer: "npm:^0.5.1"
@@ -1555,7 +1556,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/express@npm:^5.0.0":
+"@types/express@npm:*, @types/express@npm:^5.0.0":
   version: 5.0.6
   resolution: "@types/express@npm:5.0.6"
   dependencies:
@@ -1593,6 +1594,15 @@ __metadata:
   dependencies:
     "@types/node": "npm:*"
   checksum: 10c0/c582b8420586f3b9550f7e34992cb32be300bc953636f3b087ed9c180ce7ea5c2e4b35090be2d57f0d3168cc3ca1074932907caa2afe09f4e9c84cf5c0daefa8
+  languageName: node
+  linkType: hard
+
+"@types/multer@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "@types/multer@npm:2.1.0"
+  dependencies:
+    "@types/express": "npm:*"
+  checksum: 10c0/f1f512918f79c5dac007d8d30de74372ad24932b34b43d09f250178dcce6da426297e0ea9c939322545519f133cd525dca0552781967d05f43d782ff0b169333
   languageName: node
   linkType: hard
 

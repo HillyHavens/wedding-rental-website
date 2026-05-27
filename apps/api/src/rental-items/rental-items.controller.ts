@@ -5,8 +5,6 @@ import {
   Get,
   NotFoundException,
   Param,
-  ParseBoolPipe,
-  ParseIntPipe,
   Patch,
   Post,
   Query,
@@ -23,11 +21,15 @@ export class RentalItemsController {
   @Public()
   @Get()
   list(
-    @Query('featured', new ParseBoolPipe({ optional: true })) featured?: boolean,
+    @Query('featured') featured?: string,
     @Query('category') categorySlug?: string,
-    @Query('limit', new ParseIntPipe({ optional: true })) limit?: number,
+    @Query('limit') limit?: string,
   ) {
-    return this.items.findAll({ featured, categorySlug, limit });
+    return this.items.findAll({
+      featured: featured === 'true' ? true : featured === 'false' ? false : undefined,
+      categorySlug,
+      limit: limit ? parseInt(limit, 10) : undefined,
+    });
   }
 
   @Public()

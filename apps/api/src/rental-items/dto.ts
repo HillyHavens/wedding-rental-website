@@ -28,9 +28,10 @@ export class CreateRentalItemDto {
   @Min(1)
   quantity!: number;
 
+  @IsOptional()
   @IsArray()
   @IsString({ each: true })
-  images!: string[];
+  images?: string[];
 
   @IsOptional()
   @IsBoolean()

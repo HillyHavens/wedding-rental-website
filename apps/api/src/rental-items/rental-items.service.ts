@@ -85,7 +85,7 @@ export class RentalItemsService {
 
   create(dto: CreateRentalItemDto) {
     return this.prisma.rentalItem.create({
-      data: dto,
+      data: { ...dto, images: dto.images ?? [] },
       include: { category: true },
     });
   }

@@ -115,3 +115,19 @@ model BookingItem {
   @@index([rentalItemId])
   @@map("booking_items")
 }
+
+model GalleryPhoto {
+  id          String     @id @default(cuid())
+  imageUrl    String
+  caption     String?
+  clientName  String?
+  eventType   EventType?
+  isPublished Boolean    @default(true)
+  sortOrder   Int        @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isPublished, sortOrder])
+  @@map("gallery_photos")
+}

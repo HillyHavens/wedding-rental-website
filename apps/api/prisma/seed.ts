@@ -267,6 +267,85 @@ async function main() {
   });
 
   console.log(`\nAdmin seeded: ${adminEmail} / ${adminPassword}`);
+
+  // ── Gallery photos (dummy Unsplash images) ──────────────────────────────
+  console.log('Seeding gallery photos...');
+  const galleryPhotos = [
+    {
+      id: 'seed-gallery-1',
+      imageUrl: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80',
+      clientName: 'Aline & Eric',
+      caption: 'A magical Gusaba ceremony filled with ululation and joy.',
+      eventType: 'GUSABA' as const,
+      sortOrder: 1,
+    },
+    {
+      id: 'seed-gallery-2',
+      imageUrl: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=800&q=80',
+      clientName: 'Claudine & Jean-Pierre',
+      caption: 'Traditional umushanana in the most beautiful deep purple.',
+      eventType: 'GUKWA' as const,
+      sortOrder: 2,
+    },
+    {
+      id: 'seed-gallery-3',
+      imageUrl: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=80',
+      clientName: 'Diane & Patrick',
+      caption: 'An elegant white reception at the Kigali Convention Centre.',
+      eventType: 'RECEPTION' as const,
+      sortOrder: 3,
+    },
+    {
+      id: 'seed-gallery-4',
+      imageUrl: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80',
+      clientName: 'Solange & David',
+      caption: 'Civil ceremony — simple, intimate, and perfect.',
+      eventType: 'CIVIL' as const,
+      sortOrder: 4,
+    },
+    {
+      id: 'seed-gallery-5',
+      imageUrl: 'https://images.unsplash.com/photo-1591604021695-0c69b7c05981?w=800&q=80',
+      clientName: 'Immaculée & Bruno',
+      caption: 'The flowers and decor perfectly matched the Kinyarwanda theme.',
+      eventType: 'RELIGIOUS' as const,
+      sortOrder: 5,
+    },
+    {
+      id: 'seed-gallery-6',
+      imageUrl: 'https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=800&q=80',
+      clientName: 'Vestine & Alain',
+      caption: 'Our traditional igitenge wrap styling on the big day.',
+      eventType: 'GUSABA' as const,
+      sortOrder: 6,
+    },
+    {
+      id: 'seed-gallery-7',
+      imageUrl: 'https://images.unsplash.com/photo-1520854221256-17451cc331bf?w=800&q=80',
+      clientName: 'Nadège & Samuel',
+      caption: 'The bridal car decorated with fresh flowers from Kimironko Market.',
+      eventType: 'RECEPTION' as const,
+      sortOrder: 7,
+    },
+    {
+      id: 'seed-gallery-8',
+      imageUrl: 'https://images.unsplash.com/photo-1528892952291-009c663ce843?w=800&q=80',
+      clientName: 'Josiane & Frank',
+      caption: 'First dance under thousands of golden fairy lights.',
+      eventType: 'RECEPTION' as const,
+      sortOrder: 8,
+    },
+  ];
+
+  for (const photo of galleryPhotos) {
+    const { id, ...data } = photo;
+    await prisma.galleryPhoto.upsert({
+      where: { id },
+      update: data,
+      create: { id, ...data, isPublished: true },
+    });
+  }
+
   console.log('Done.');
 }
 

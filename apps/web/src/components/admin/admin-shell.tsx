@@ -6,6 +6,7 @@ import { useEffect, type ReactNode } from 'react';
 import {
   LayoutDashboard,
   CalendarRange,
+  Images,
   Package,
   LogOut,
   Loader2,
@@ -17,6 +18,7 @@ const links = [
   { href: '/admin', label: 'Dashboard', Icon: LayoutDashboard },
   { href: '/admin/bookings', label: 'Bookings', Icon: CalendarRange },
   { href: '/admin/items', label: 'Items', Icon: Package },
+  { href: '/admin/gallery', label: 'Gallery', Icon: Images },
 ];
 
 export function AdminShell({ children }: { children: ReactNode }) {

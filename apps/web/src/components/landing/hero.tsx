@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion, useReducedMotion } from 'framer-motion';
-import { ArrowRight, Play } from 'lucide-react';
+import { ArrowRight, ShoppingBag } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const headlineWords = ['Every', 'ceremony,', 'beautifully', 'rented.'];
@@ -13,17 +14,16 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0">
-        <video
-          className="absolute inset-0 h-full w-full object-cover"
-          src="/legacy-assets/hero.mp4"
-          poster="/legacy-assets/hero-poster.jpg"
-          autoPlay
-          loop
-          muted
-          playsInline
+        <Image
+          src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1920&q=85"
+          alt="Rwandan wedding celebration"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-emerald_deep-800/70 via-emerald_deep-700/50 to-emerald_deep-800/85" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(10,38,29,0.6)_100%)]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-emerald_deep-900/75 via-emerald_deep-800/55 to-emerald_deep-900/90" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(10,38,29,0.55)_100%)]" />
       </div>
 
       <div className="container relative z-10 pt-32 pb-20">
@@ -83,8 +83,8 @@ export function Hero() {
             </Link>
           </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/#featured">
-              <Play className="h-4 w-4" />
+            <Link href="/items">
+              <ShoppingBag className="h-4 w-4" />
               See what we offer
             </Link>
           </Button>

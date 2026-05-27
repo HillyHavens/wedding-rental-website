@@ -5,6 +5,7 @@ import * as Dialog from '@radix-ui/react-dialog';
 import { Edit, Loader2, Plus, Trash2, X } from 'lucide-react';
 import { AdminShell } from '@/components/admin/admin-shell';
 import { Button } from '@/components/ui/button';
+import { ConfirmDialog } from '@/components/ui/confirm-dialog';
 import { Input, Label, Select, Textarea } from '@/components/ui/input';
 import { apiFetch, type ApiError } from '@/lib/client-api';
 import { cn, formatRwf } from '@/lib/utils';
@@ -39,6 +40,7 @@ export default function AdminItemsPage() {
   const [editing, setEditing] = useState<FormState | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [deleteId, setDeleteId] = useState<string | null>(null);
 
   const load = () => {
     setItems(null);
@@ -112,10 +114,8 @@ export default function AdminItemsPage() {
   };
 
   const remove = async (id: string) => {
-    if (!confirm('Mark this item as inactive? It will be hidden from customers.')) {
-      return;
-    }
     await apiFetch(`/items/${id}`, { method: 'DELETE' });
+    setDeleteId(null);
     load();
   };
 
@@ -186,7 +186,7 @@ export default function AdminItemsPage() {
                       <Edit className="h-4 w-4" />
                     </button>
                     <button
-                      onClick={() => remove(i.id)}
+                      onClick={() => setDeleteId(i.id)}
                       className="inline-flex items-center gap-1 text-emerald_deep-700/50 hover:text-terracotta-500"
                       aria-label="Delete"
                     >
@@ -336,6 +336,16 @@ export default function AdminItemsPage() {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+
+      <ConfirmDialog
+        open={deleteId !== null}
+        title="Hide this item?"
+        description="This item will be marked as inactive and hidden from customers. You can re-enable it at any time by editing it."
+        confirmLabel="Hide item"
+        destructive
+        onConfirm={() => deleteId && remove(deleteId)}
+        onCancel={() => setDeleteId(null)}
+      />
     </AdminShell>
   );
 }

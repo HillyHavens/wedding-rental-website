@@ -42,6 +42,35 @@ export async function apiFetch<T>(
   return body as T;
 }
 
+/** Upload a file with optional extra string fields (multipart/form-data). */
+export async function apiUpload<T>(
+  path: string,
+  formData: FormData,
+): Promise<T> {
+  const token = getToken();
+  const headers = new Headers();
+  if (token) headers.set('Authorization', `Bearer ${token}`);
+  // Do NOT set Content-Type — browser must set it with the multipart boundary
+
+  const res = await fetch(`${BASE}/api${path}`, {
+    method: 'POST',
+    headers,
+    body: formData,
+  });
+  const text = await res.text();
+  const body = text ? safeParse(text) : null;
+
+  if (!res.ok) {
+    const message = extractMessage(body) ?? `HTTP ${res.status}`;
+    const err: ApiError = { status: res.status, message, body };
+    throw err;
+  }
+  return body as T;
+}
+
+/** Base URL for resolving API-hosted assets (uploaded images). */
+export const assetBase = BASE;
+
 function safeParse(s: string): unknown {
   try {
     return JSON.parse(s);
